@@ -1,0 +1,18 @@
+/opt/lampp/bin/mysql -u root -e "DROP DATABASE IF EXISTS regime_alimentaire; CREATE DATABASE regime_alimentaire;"
+
+
+cd /opt/lampp/htdocs/regime/regime-ci
+php spark migrate
+php spark db:seed RegimeSeeder
+
+routes lignes 13 a 16
+php spark routes
+
+site
+php spark serve
+
+
+
+reinitialiser 
+php spark migrate:refresh
+php spark db:seed RegimeSeeder
