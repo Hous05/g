@@ -5,7 +5,7 @@
     <div class="summary">
         <p><strong>Statut :</strong> <?= (int) $user['est_gold'] === 1 ? 'Gold actif' : 'Non actif' ?></p>
         <p><strong>Prix :</strong> <?= number_format($prixGold, 0, ',', ' ') ?> Ar</p>
-        <p><strong>Remise :</strong> <?= number_format($remiseGold, 0, ',', ' ') ?>% sur les régimes</p>
+        <p><strong>Remise :</strong> <?= number_format($remiseGold, 0, ',', ' ') ?>% sur les regimes</p>
         <p><strong>Solde :</strong> <?= number_format((float) $wallet['solde'], 0, ',', ' ') ?> Ar</p>
     </div>
 

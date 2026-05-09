@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/front') ?>
 <?= $this->section('content') ?>
 <section class="panel narrow">
-    <h1>Porte-monnaie</h1>
+    <h1>Porte monnaie</h1>
     <p class="balance">Solde : <strong data-wallet-balance><?= number_format((float) $wallet['solde'], 0, ',', ' ') ?></strong> Ar</p>
 
     <?php if (!empty($message)): ?><p class="success"><?= esc($message) ?></p><?php endif; ?>

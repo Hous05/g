@@ -11,13 +11,28 @@
 <header class="topbar admin">
     <a class="brand" href="<?= site_url('admin/dashboard') ?>">Back Office</a>
     <nav>
-        <a href="<?= site_url('/') ?>">Front</a>
         <?php if (session('admin_id')): ?>
-            <a href="<?= site_url('admin/logout') ?>">Déconnexion</a>
+            <a href="<?= site_url('admin/dashboard') ?>">Tableau de Bord</a>
+            <a href="<?= site_url('admin/regimes') ?>">Regimes</a>
+            <a href="<?= site_url('admin/activities') ?>">Activites</a>
+            <a href="<?= site_url('admin/codes') ?>">Codes</a>
+            <a href="<?= site_url('admin/parameters') ?>">Parametres</a>
+            <a href="<?= site_url('admin/logout') ?>" class="btn-logout">Deconnexion</a>
         <?php endif; ?>
+        <a href="<?= site_url('/') ?>" class="btn-outline" style="margin-left: 15px;">Front</a>
     </nav>
 </header>
-<main class="page">
+<main class="page" style="padding: 20px;">
+    <?php if (session('message')): ?>
+        <div class="success" style="margin-bottom: 20px;">
+            <?= esc(session('message')) ?>
+        </div>
+    <?php endif; ?>
+    <?php if (session('error')): ?>
+        <div class="error" style="margin-bottom: 20px; color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 15px; border-radius: 4px;">
+            <?= esc(session('error')) ?>
+        </div>
+    <?php endif; ?>
     <?= $this->renderSection('content') ?>
 </main>
 </body>

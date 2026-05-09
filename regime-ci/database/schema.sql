@@ -193,6 +193,15 @@ INSERT INTO codes_recharge (code, montant) VALUES
 INSERT INTO portefeuilles (utilisateur_id, solde) VALUES
 (1, 0), (2, 35000), (3, 15000), (4, 0), (5, 50000);
 
+INSERT INTO paiements (utilisateur_id, type_paiement, montant, created_at) VALUES
+(1, 'gold', 50000, '2025-11-20'),
+(2, 'regime', 120000, '2025-12-05'),
+(3, 'recharge', 15000, '2026-01-10'),
+(4, 'gold', 50000, '2026-02-15'),
+(5, 'regime', 150000, '2026-03-25'),
+(1, 'regime', 100000, '2026-04-10'),
+(2, 'recharge', 30000, '2026-05-02');
+
 INSERT INTO parametres (cle, valeur, description) VALUES
 ('prix_gold', '50000', 'Prix de l option Gold en Ariary'),
 ('remise_gold_pct', '15', 'Remise appliquée aux utilisateurs Gold'),

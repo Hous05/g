@@ -17,7 +17,7 @@ class Wallet extends BaseController
         if (strtolower($this->request->getMethod()) === 'post') {
             try {
                 $result = $walletModel->rechargeWithCode($userId, (string) $this->request->getPost('code'));
-                $message = 'Recharge réussie : +' . number_format($result['montant'], 0, ',', ' ') . ' Ar.';
+                $message = 'Recharge reussie : +' . number_format($result['montant'], 0, ',', ' ') . ' Ar.';
             } catch (RuntimeException $exception) {
                 $error = $exception->getMessage();
             }

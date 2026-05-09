@@ -19,7 +19,7 @@ class Gold extends BaseController
         if (strtolower($this->request->getMethod()) === 'post') {
             try {
                 $result = $walletModel->activateGold($userId);
-                $message = $result['already_gold'] ? 'Votre option Gold est déjà active.' : 'Option Gold activée.';
+                $message = $result['already_gold'] ? 'Votre option Gold est deja active.' : 'Option Gold activee.';
             } catch (RuntimeException $exception) {
                 $error = $exception->getMessage();
             }

@@ -15,14 +15,14 @@
             <a href="<?= site_url('profile') ?>">Profil</a>
             <a href="<?= site_url('objective') ?>">Objectif</a>
             <a href="<?= site_url('program') ?>">Programme</a>
-            <a href="<?= site_url('wallet') ?>">Porte-monnaie</a>
+            <a href="<?= site_url('wallet') ?>">Porte monnaie</a>
             <a href="<?= site_url('gold') ?>">Gold</a>
-            <a href="<?= site_url('logout') ?>">Déconnexion</a>
+            <a href="<?= site_url('logout') ?>" class="action-btn delete" style="margin-left: 10px; margin-right: 0;">Deconnexion</a>
         <?php else: ?>
             <a href="<?= site_url('register') ?>">Inscription</a>
             <a href="<?= site_url('login') ?>">Connexion</a>
         <?php endif; ?>
-        <a href="<?= site_url('admin/login') ?>">Admin</a>
+        <a href="<?= site_url('admin/login') ?>" class="btn-outline" style="margin-left: 15px;">Admin</a>
     </nav>
 </header>
 <main class="page">

@@ -49,7 +49,7 @@ class Ajax extends BaseController
 
             return $this->response->setJSON([
                 'success' => true,
-                'message' => 'Recharge réussie.',
+                'message' => 'Recharge reussie.',
                 'montant' => $result['montant'],
                 'solde' => $result['solde'],
             ]);

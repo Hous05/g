@@ -15,7 +15,7 @@
         <label>Poids cible
             <input type="number" step="0.01" name="poids_cible_kg" value="<?= esc($profile['poids_cible_kg'] ?? '') ?>">
         </label>
-        <label>Durée souhaitée
+        <label>Duree souhaitée
             <input type="number" name="duree_jours" value="30" min="7" max="120">
         </label>
         <button class="button" type="submit">Enregistrer l objectif</button>

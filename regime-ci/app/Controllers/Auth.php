@@ -51,7 +51,7 @@ class Auth extends BaseController
             $errors = $this->validator->getErrors();
         }
 
-        return view('front/auth/register_step2', ['title' => 'Santé', 'errors' => $errors]);
+        return view('front/auth/register_step2', ['title' => 'Sante', 'errors' => $errors]);
     }
 
     public function login()
