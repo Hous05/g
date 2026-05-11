@@ -190,6 +190,7 @@ INSERT INTO codes_recharge (code, montant) VALUES
 ('REG-40000-B1', 40000), ('REG-45000-B2', 45000), ('REG-50000-B3', 50000),
 ('REG-75000-B4', 75000), ('REG-100000-B5', 100000), ('REG-125000-B6', 125000);
 
+
 INSERT INTO portefeuilles (utilisateur_id, solde) VALUES
 (1, 0), (2, 35000), (3, 15000), (4, 0), (5, 50000);
 

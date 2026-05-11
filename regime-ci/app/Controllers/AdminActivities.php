@@ -16,13 +16,19 @@ class AdminActivities extends BaseController
 
     public function index()
     {
-        $search = $this->request->getGet('q');
-        
-        $builder = $this->activityModel->select('activites_sportives.*, objectifs.libelle as objectif_libelle')
-                                       ->join('objectifs', 'objectifs.id = activites_sportives.objectif_id');
-        
-        if ($search) {
+        $search = trim((string) $this->request->getGet('q'));
+        $statut = trim((string) $this->request->getGet('statut'));
+
+        $builder = $this->activityModel
+            ->select('activites_sportives.*, objectifs.libelle as objectif_libelle')
+            ->join('objectifs', 'objectifs.id = activites_sportives.objectif_id');
+
+        if ($search !== '') {
             $builder->like('activites_sportives.nom', $search);
+        }
+
+        if (in_array($statut, ['1', '0'], true)) {
+            $builder->where('activites_sportives.actif', (int) $statut);
         }
 
         $activities = $builder->findAll();
@@ -30,7 +36,8 @@ class AdminActivities extends BaseController
         return view('back/activities/index', [
             'title' => 'Gestion des Activites',
             'activities' => $activities,
-            'search' => $search
+            'search' => $search,
+            'statut' => $statut,
         ]);
     }
 

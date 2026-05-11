@@ -41,6 +41,7 @@ $routes->group('admin', static function ($routes) {
     // Codes de recharge
     $routes->get('codes', 'AdminCodes::index');
     $routes->post('codes/generate', 'AdminCodes::generate');
+    $routes->post('codes/status/(:num)', 'AdminCodes::status/$1');
     $routes->get('codes/delete/(:num)', 'AdminCodes::delete/$1');
 
     // Paramètres

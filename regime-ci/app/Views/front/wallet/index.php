@@ -1,3 +1,6 @@
+<?php /** @var array $wallet */ ?>
+<?php /** @var string|null $message */ ?>
+<?php /** @var string|null $error */ ?>
 <?= $this->extend('layouts/front') ?>
 <?= $this->section('content') ?>
 <section class="panel narrow">
@@ -7,7 +10,7 @@
     <?php if (!empty($message)): ?><p class="success"><?= esc($message) ?></p><?php endif; ?>
     <?php if (!empty($error)): ?><p class="error"><?= esc($error) ?></p><?php endif; ?>
 
-    <form method="post" class="form" data-recharge-form>
+    <form method="post" class="form" data-recharge-form data-validate>
         <label>Code de recharge
             <input name="code" placeholder="REG-50000-B3" required>
         </label>

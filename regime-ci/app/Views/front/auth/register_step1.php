@@ -1,20 +1,29 @@
+<?php /** @var array $errors */ ?>
 <?= $this->extend('layouts/front') ?>
 <?= $this->section('content') ?>
 <section class="panel narrow">
     <h1>Inscription</h1>
-    <?= view('partials/errors', ['errors' => $errors ?? []]) ?>
     <form method="post" class="form" data-validate>
         <label>Nom
-            <input name="nom" value="<?= esc(old('nom')) ?>" required>
+            <input name="nom" autocomplete="name" value="<?= esc(old('nom')) ?>" required>
+            <?php if (!empty($errors['nom'])): ?>
+                <span class="field-error"><?= esc((string) $errors['nom']) ?></span>
+            <?php endif; ?>
         </label>
         <label>Email
-            <input type="email" name="email" value="<?= esc(old('email')) ?>" required>
+            <input type="email" name="email" autocomplete="email" value="<?= esc(old('email')) ?>" required>
+            <?php if (!empty($errors['email'])): ?>
+                <span class="field-error"><?= esc((string) $errors['email']) ?></span>
+            <?php endif; ?>
         </label>
         <label>Mot de passe
             <span class="password-field">
-                <input type="password" name="mot_de_passe" minlength="6" required>
+                <input type="password" name="mot_de_passe" autocomplete="new-password" minlength="6" required>
                 <button type="button" data-toggle-password>Voir</button>
             </span>
+            <?php if (!empty($errors['mot_de_passe'])): ?>
+                <span class="field-error"><?= esc((string) $errors['mot_de_passe']) ?></span>
+            <?php endif; ?>
         </label>
         <label>Genre
             <select name="genre" required>
@@ -22,6 +31,9 @@
                 <option value="femme">Femme</option>
                 <option value="autre">Autre</option>
             </select>
+            <?php if (!empty($errors['genre'])): ?>
+                <span class="field-error"><?= esc((string) $errors['genre']) ?></span>
+            <?php endif; ?>
         </label>
         <label>Date de naissance
             <input type="date" name="date_naissance" value="<?= esc(old('date_naissance')) ?>">

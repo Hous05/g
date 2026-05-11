@@ -13,10 +13,35 @@ class Auth extends BaseController
 
         if (strtolower($this->request->getMethod()) === 'post') {
             $rules = [
-                'nom' => 'required|min_length[2]',
-                'email' => 'required|valid_email|is_unique[utilisateurs.email]',
-                'mot_de_passe' => 'required|min_length[6]',
-                'genre' => 'required|in_list[homme,femme,autre]',
+                'nom' => [
+                    'rules' => 'required|min_length[2]',
+                    'errors' => [
+                        'required' => 'Nom obligatoire.',
+                        'min_length' => 'Nom trop court (2 caracteres min).',
+                    ],
+                ],
+                'email' => [
+                    'rules' => 'required|valid_email|is_unique[utilisateurs.email]',
+                    'errors' => [
+                        'required' => 'Email obligatoire.',
+                        'valid_email' => 'Email invalide.',
+                        'is_unique' => 'Email deja utilise.',
+                    ],
+                ],
+                'mot_de_passe' => [
+                    'rules' => 'required|min_length[6]',
+                    'errors' => [
+                        'required' => 'Mot de passe obligatoire.',
+                        'min_length' => 'Mot de passe trop court (6 caracteres min).',
+                    ],
+                ],
+                'genre' => [
+                    'rules' => 'required|in_list[homme,femme,autre]',
+                    'errors' => [
+                        'required' => 'Genre obligatoire.',
+                        'in_list' => 'Genre invalide.',
+                    ],
+                ],
             ];
 
             if ($this->validate($rules)) {
@@ -38,9 +63,33 @@ class Auth extends BaseController
 
         if (strtolower($this->request->getMethod()) === 'post') {
             $rules = [
-                'taille_cm' => 'required|decimal|greater_than[80]|less_than[250]',
-                'poids_kg' => 'required|decimal|greater_than[25]|less_than[300]',
-                'age' => 'required|integer|greater_than[10]|less_than[100]',
+                'taille_cm' => [
+                    'rules' => 'required|decimal|greater_than[80]|less_than[250]',
+                    'errors' => [
+                        'required' => 'Taille obligatoire.',
+                        'decimal' => 'Taille invalide.',
+                        'greater_than' => 'Taille trop petite (min 80).',
+                        'less_than' => 'Taille trop grande (max 250).',
+                    ],
+                ],
+                'poids_kg' => [
+                    'rules' => 'required|decimal|greater_than[25]|less_than[300]',
+                    'errors' => [
+                        'required' => 'Poids obligatoire.',
+                        'decimal' => 'Poids invalide.',
+                        'greater_than' => 'Poids trop petit (min 25).',
+                        'less_than' => 'Poids trop grand (max 300).',
+                    ],
+                ],
+                'age' => [
+                    'rules' => 'required|integer|greater_than[10]|less_than[100]',
+                    'errors' => [
+                        'required' => 'Age obligatoire.',
+                        'integer' => 'Age invalide.',
+                        'greater_than' => 'Age trop petit (min 10).',
+                        'less_than' => 'Age trop grand (max 100).',
+                    ],
+                ],
             ];
 
             if ($this->validate($rules)) {
@@ -56,20 +105,43 @@ class Auth extends BaseController
 
     public function login()
     {
-        $error = null;
+        $errors = [];
+        $emailValue = 'hery@example.com';
 
         if (strtolower($this->request->getMethod()) === 'post') {
-            $user = (new UserModel())->where('email', trim((string) $this->request->getPost('email')))->first();
+            $email = trim((string) $this->request->getPost('email'));
+            $password = (string) $this->request->getPost('mot_de_passe');
+            $emailValue = $email;
 
-            if ($user && password_verify((string) $this->request->getPost('mot_de_passe'), $user['mot_de_passe'])) {
-                $this->session->set('user_id', (int) $user['id']);
-                return redirect()->to(site_url('profile'));
+            if ($email === '') {
+                $errors['email'] = 'Email obligatoire.';
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = 'Email invalide.';
             }
 
-            $error = 'Email ou mot de passe incorrect.';
+            if ($password === '') {
+                $errors['mot_de_passe'] = 'Mot de passe obligatoire.';
+            }
+
+            if (!$errors) {
+                $user = (new UserModel())->where('email', $email)->first();
+
+                if (!$user) {
+                    $errors['email'] = 'Email introuvable.';
+                } elseif (!password_verify($password, $user['mot_de_passe'])) {
+                    $errors['mot_de_passe'] = 'Mot de passe incorrect.';
+                } else {
+                    $this->session->set('user_id', (int) $user['id']);
+                    return redirect()->to(site_url('profile'));
+                }
+            }
         }
 
-        return view('front/auth/login', ['title' => 'Connexion', 'error' => $error]);
+        return view('front/auth/login', [
+            'title' => 'Connexion',
+            'errors' => $errors,
+            'emailValue' => $emailValue,
+        ]);
     }
 
     public function logout()

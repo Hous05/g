@@ -59,6 +59,7 @@ document.querySelectorAll('[data-suggestion-form]').forEach((form) => {
         <form method="post" action="${appUrl('program')}">
           <input type="hidden" name="regime_id" value="${regime.id}">
           <input type="hidden" name="activite_id" value="${firstActivity.id}">
+          <input type="hidden" name="duree_jours" value="${duration.value || '30'}">
           <button class="button" type="submit">Créer ce programme</button>
         </form>
       </article>

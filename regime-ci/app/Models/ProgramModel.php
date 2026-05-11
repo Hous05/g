@@ -28,9 +28,8 @@ class ProgramModel extends Model
             'SELECT r.*, o.libelle AS objectif
              FROM regimes r
              JOIN objectifs o ON o.id = r.objectif_id
-             WHERE r.objectif_id = ? AND r.actif = 1
-             ORDER BY ABS(r.duree_jours - ?), r.prix
-             LIMIT 3',
+             WHERE r.objectif_id = ? AND r.actif = 1 AND r.duree_jours <= ?
+             ORDER BY r.duree_jours DESC, r.prix',
             [$objectiveId, $durationDays]
         )->getResultArray();
 
@@ -45,7 +44,7 @@ class ProgramModel extends Model
         return ['regimes' => $regimes, 'activites' => $activites];
     }
 
-    public function createProgram(int $userId, int $regimeId, int $activityId): int
+    public function createProgram(int $userId, int $regimeId, int $activityId, ?int $durationDays = null): int
     {
         $db = db_connect();
         $profile = (new HealthModel())->findByUser($userId);
@@ -56,7 +55,11 @@ class ProgramModel extends Model
             throw new RuntimeException('Profil ou régime introuvable.');
         }
 
-        $price = (float) $regime['prix'];
+        $baseDuration = (int) $regime['duree_jours'];
+        $durationDays = $durationDays && $durationDays > 0 ? $durationDays : $baseDuration;
+        $ratio = $baseDuration > 0 ? $durationDays / $baseDuration : 1;
+
+        $price = (float) $regime['prix'] * $ratio;
         if ((int) $user['est_gold'] === 1) {
             $discountRow = $db->table('parametres')->where('cle', 'remise_gold_pct')->get()->getRowArray();
             $discount = (float) ($discountRow['valeur'] ?? 15);
@@ -68,10 +71,10 @@ class ProgramModel extends Model
             'regime_id' => $regimeId,
             'activite_id' => $activityId,
             'objectif_id' => $regime['objectif_id'],
-            'duree_jours' => $regime['duree_jours'],
+            'duree_jours' => $durationDays,
             'prix' => $price,
             'poids_depart_kg' => $profile['poids_kg'],
-            'poids_estime_kg' => (float) $profile['poids_kg'] + (float) $regime['variation_poids_kg'],
+            'poids_estime_kg' => (float) $profile['poids_kg'] + ((float) $regime['variation_poids_kg'] * $ratio),
         ], true);
 
         return $programId;

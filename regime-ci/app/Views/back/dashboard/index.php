@@ -1,3 +1,4 @@
+<?php /** @var array $stats */ ?>
 <?= $this->extend('layouts/back') ?>
 <?= $this->section('content') ?>
 <section class="panel">

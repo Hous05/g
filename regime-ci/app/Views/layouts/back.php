@@ -25,12 +25,12 @@
 <main class="page" style="padding: 20px;">
     <?php if (session('message')): ?>
         <div class="success" style="margin-bottom: 20px;">
-            <?= esc(session('message')) ?>
+            <?= esc((string) session('message')) ?>
         </div>
     <?php endif; ?>
     <?php if (session('error')): ?>
         <div class="error" style="margin-bottom: 20px; color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 15px; border-radius: 4px;">
-            <?= esc(session('error')) ?>
+            <?= esc((string) session('error')) ?>
         </div>
     <?php endif; ?>
     <?= $this->renderSection('content') ?>

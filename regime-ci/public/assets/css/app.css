@@ -186,6 +186,12 @@ textarea:focus {
   color: var(--danger);
 }
 
+.field-error {
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 13px;
+}
+
 .success {
   padding: 12px;
   border-left: 4px solid var(--primary);

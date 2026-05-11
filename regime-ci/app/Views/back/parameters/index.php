@@ -1,4 +1,6 @@
-﻿<?= $this->extend('layouts/back') ?>
+﻿<?php /** @var array<int, array<string, mixed>> $params */ ?>
+<?php /** @var string|null $title */ ?>
+<?= $this->extend('layouts/back') ?>
 <?= $this->section('content') ?>
 
 <div class="panel" style="max-width: 800px; margin: 0 auto;">
@@ -17,10 +19,10 @@
             <tbody>
                 <?php foreach ($params as $p): ?>
                 <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 10px; font-family: monospace;"><strong><?= esc($p['cle']) ?></strong></td>
-                    <td style="padding: 10px; color: #666; font-size: 14px;"><?= esc($p['description']) ?></td>
+                    <td style="padding: 10px; font-family: monospace;"><strong><?= esc((string) $p['cle']) ?></strong></td>
+                    <td style="padding: 10px; color: #666; font-size: 14px;"><?= esc((string) ($p['description'] ?? '')) ?></td>
                     <td style="padding: 10px;">
-                        <input type="text" name="<?= esc($p['cle']) ?>" value="<?= esc($p['valeur']) ?>" required>
+                        <input type="text" name="<?= esc((string) $p['cle']) ?>" value="<?= esc((string) $p['valeur']) ?>" required>
                     </td>
                 </tr>
                 <?php endforeach; ?>
